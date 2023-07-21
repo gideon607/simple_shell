@@ -17,5 +17,6 @@
 #define MAX_COMMAND_PER_LINE 50
 
 void exe_commands(char *commands);
+void exe_commands(char *commands_line);
 
 #endif /* MAIN_H */

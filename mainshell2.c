@@ -10,21 +10,31 @@
 #include <dirent.h>
 
 #define MAX_COMMAND_PER_LINE 50
- 
 /**
  * exe_commands - main exection command
- * @commands: command to be done
+ * @commands_line: command to be done
  * Return: is 0 (for success)
  */
-void exe_commands(char *commands)
+void exe_commands(char *commands_line)
 {
 	pid_t pid = fork(); /* for the new process id */
 
 	if (pid == 0)
 	{
 		/* for within process */
-		char *args[] = {commands, NULL};
-		execve(commands, args, NULL); /* execution on the command */
+		char *token;
+		char *args[MAX_COMMAND_PER_LINE];
+		int arg_count = 0;
+
+		token = strtok(commands_line, " \t\n"); /* into token */
+		while (token != NULL && arg_count < MAX_COMMAND_PER_LINE - 1)
+		{
+			args[arg_count] = token;
+			arg_count++;
+			token = strtok(NULL, "\t\n");
+		}
+		args[arg_count] = NULL;
+		execve(args[0], args, NULL); /* execution on the command */
 		perror("404ERROR"); /* prints the errormsg */
 		_exit(EXIT_FAILURE);
 	} else if (pid > 0)
@@ -72,3 +82,4 @@ int main(void)
 	}
 	return (0);
 }
+
