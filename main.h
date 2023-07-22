@@ -18,5 +18,6 @@
 
 void exe_commands(char *commands);
 void exe_commands(char *commands_line);
+void *find_command(const char *commands);
 
 #endif /* MAIN_H */
