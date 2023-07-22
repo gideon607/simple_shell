@@ -59,7 +59,7 @@ void exe_commands(char *commands_line)
 	{
 		perror("404ERROR"); /* pick fork process failed */
 	}
-	free(full_path)
+	free(full_path);
 }
 
 /**
@@ -74,7 +74,7 @@ char *find_command(const char *commands)
 
 	while (token != NULL)
 	{
-		char *full_path = malloc(strlen(token) + strlen(command) + 2);
+		char *full_path = malloc(strlen(token) + strlen(commands) + 2);
 
 		sprintf(full_path, "%s/%s", token, commands); /* for full path ls */
 		if (access(full_path, X_OK) == 0)
@@ -88,7 +88,7 @@ char *find_command(const char *commands)
 	}
 	free(path);
 	return (NULL); /* if not found */
-
+}
 /**
  * main - entry on the program
  *
@@ -122,5 +122,4 @@ int main(void)
 	}
 	return (0);
 }
-
 
