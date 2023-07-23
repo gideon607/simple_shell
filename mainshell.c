@@ -10,7 +10,7 @@
 #include <dirent.h>
 
 #define MAX_COMMAND_PER_LINE 50
- 
+#define MAX_ARGUMENT_PER_COMMAND 10
 /**
  * exe_commands - main exection command
  * @commands: command to be done
