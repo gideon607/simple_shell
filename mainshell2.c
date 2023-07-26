@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+* replace_variables - replaces variables in a line of text
+* @line: line of text
+*
+* Return: void
+*/
 void replace_variables(char *line) {
     char *var;
     char buffer[MAXLINE];
@@ -23,11 +29,23 @@ void replace_variables(char *line) {
     }
 }
 
+/**
+* execute_exit - executes the exit command
+* @args: array of arguments
+*
+* Return: void
+*/
 void execute_exit(char **args)
 {
     exit(args[1] != NULL ? _atoi(args[1]) : EXIT_SUCCESS);
 }
 
+/**
+* execute_cd - executes the cd command
+* @args: array of arguments
+*
+* Return: void
+*/
 void execute_cd(char **args)
 {
     char *dir;
@@ -53,6 +71,12 @@ void execute_cd(char **args)
     }
 }
 
+/**
+* execute_env - executes the env command
+* @args: array of arguments
+*
+* Return: void
+*/
 void execute_env(char **args)
 {
     int i;
@@ -60,6 +84,12 @@ void execute_env(char **args)
         printf("%s\n", environ[i]);
 }
 
+/**
+* execute_setenv - executes the setenv command
+* @args: array of arguments
+*
+* Return: void
+*/
 void execute_setenv(char **args)
 {
     if (args[1] == NULL || args[2] == NULL)
