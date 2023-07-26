@@ -26,13 +26,13 @@ char *find_executable(char *cmd)
 	char full_cmd[MAXLINE];
 	path = getenv("PATH");
 	path_copy = strdup(path);
-	dir = strtok(path_copy, ":");
+	dir = _strtok(path_copy, ":");
 	while (dir != NULL)
 	{
 		snprintf(full_cmd, sizeof(full_cmd), "%s/%s", dir, cmd);
 		if (access(full_cmd, X_OK) == 0)
 			break;
-		dir = strtok(NULL, ":");
+		dir = _strtok(NULL, ":");
 	}
 	free(path_copy);
 	return (dir == NULL ? NULL : strdup(full_cmd));

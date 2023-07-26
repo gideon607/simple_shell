@@ -51,6 +51,7 @@ int last_exit_status;
 void parse_line(char *line, char **args);
 int _atoi(char *s);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char *_strtok(char *str, const char *delim);
 
 /*mainshell2.c*/
 void replace_variables(char *line);

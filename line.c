@@ -12,10 +12,10 @@
 void parse_line(char *line, char **args)
 {
 	int i = 0;
-	args[0] = strtok(line, " ");
+	args[0] = _strtok(line, " ");
 
 	while (args[i] != NULL)
-		args[++i] = strtok(NULL, " ");
+		args[++i] = _strtok(NULL, " ");
 }
 
 /**
@@ -30,8 +30,8 @@ void parse_line(char *line, char **args)
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	static char buffer[BUFFER_SIZE];
-	static size_t start;
-	static size_t end;
+	static size_t start=0;
+	static size_t end=0;
 	size_t total_len=0;
 	ssize_t bytes_read;
 
@@ -70,6 +70,31 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	}
 	(*lineptr)[total_len] = '\0';
 	return (total_len > 0 ? (ssize_t)total_len : bytes_read);
-
 	
+}
+
+/**
+ * _strtok - splits a string into tokens based on a delimiter
+ * @str: the string to split
+ * @delim: the delimiter to split the string on
+ *
+ * Return: pointer to the first token found in the string.
+ * NULL is returned when there are no more tokens.
+ */
+char *_strtok(char *str, const char *delim)
+{
+	static char *lasts;
+	int ch;
+
+	if (str == 0)
+		str = lasts;
+	do {
+		if ((ch = *str++) == '\0')
+			return (0);
+	} while (strchr(delim, ch));
+	--str;
+	lasts = str + strcspn(str, delim);
+	if (*lasts != 0)
+		*lasts++ = 0;
+	return (str);
 }
