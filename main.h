@@ -47,6 +47,11 @@ typedef struct
 
 int last_exit_status;
 
+/*line.c*/
+void parse_line(char *line, char **args);
+int _atoi(char *s);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 /*mainshell2.c*/
 void replace_variables(char *line);
 void execute_exit(char **args);
@@ -59,10 +64,5 @@ void execute_unsetenv(char **args);
 char *find_executable(char *cmd);
 command_t *find_command(command_t *commands, int ncommands, char *name);
 void execute_command(char **args);
-
-/*line.c*/
-void parse_line(char *line, char **args);
-int _atoi(char *s);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* MAIN_H */
