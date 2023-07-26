@@ -36,7 +36,7 @@ char *find_executable(char *cmd)
 	}
 		
 	free(path_copy);
-	return dir == NULL ? NULL : strdup(full_cmd);
+	return (dir == NULL ? NULL : strdup(full_cmd));
 }
 
 /**
@@ -53,8 +53,7 @@ command_t *find_command(command_t *commands, int ncommands, char *name)
 	for (i = 0; i < ncommands; i++)
 		if (strcmp(commands[i].name, name) == 0)
 			return &commands[i];
-	
-	return NULL;
+	return (NULL);
 }
 
 /**
@@ -85,24 +84,23 @@ void execute_command(char **args)
 		cmd = find_executable(args[0]);
 		if (cmd != NULL)
 			args[0] = cmd;
-	
-		pid = fork();
+			pid = fork();
 		if (pid == 0)
 		{
 		if (execve(args[0], args, environ) == -1)
 			perror(args[0]);
-		
 		exit(EXIT_FAILURE);
 	}
-	else if (pid > 0){
+	else if (pid > 0) 
+	{
 	last_exit_status = WEXITSTATUS(status);
 	
 	wait(&status);
-	}else{
+	} 
+	else {
 		perror("fork");
 		last_exit_status = 1;
-	}
-	
+	} 
 	free(cmd);
 	}
 }
