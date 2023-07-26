@@ -19,9 +19,9 @@ void replace_variables(char *line)
 		strncpy(var, buffer, strlen(buffer));
 		var += strlen(buffer);
 		*var = ' ';
-        }
-        var = strstr(line, "$$");
-        if (var != NULL) {
+	}
+	var = strstr(line, "$$");
+	if (var != NULL) {
                 pid = getpid();
                 sprintf(buffer, "%d", pid);
                 strncpy(var, buffer, strlen(buffer));
