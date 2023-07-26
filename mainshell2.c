@@ -6,18 +6,19 @@
 *
 * Return: void
 */
-void replace_variables(char *line) {
-        char *var;
-        char buffer[MAXLINE];
-        pid_t pid;
+void replace_variables(char *line)
+{
+	char *var;
+	char buffer[MAXLINE];
+	pid_t pid;
+	var = strstr(line, "$?");
 
-        var = strstr(line, "$?");
-        if (var != NULL)
-        {
-                sprintf(buffer, "%d", last_exit_status);
-                strncpy(var, buffer, strlen(buffer));
-                var += strlen(buffer);
-                *var = ' ';
+	if (var != NULL)
+	{
+		sprintf(buffer, "%d", last_exit_status);
+		strncpy(var, buffer, strlen(buffer));
+		var += strlen(buffer);
+		*var = ' ';
         }
         var = strstr(line, "$$");
         if (var != NULL) {
