@@ -81,8 +81,10 @@ void execute_command(char **args)
 	{
 		cmd = find_executable(args[0]);
 		if (cmd != NULL)
+		{
 			args[0] = cmd;
 			pid = fork();
+		}
 		if (pid == 0)
 		{
 		if (execve(args[0], args, environ) == -1)

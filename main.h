@@ -51,7 +51,7 @@ int last_exit_status;
 void replace_variables(char *line);
 void execute_exit(char **args);
 void execute_cd(char **args);
-void execute_env(void);
+void execute_env();
 void execute_setenv(char **args);
 
 /*mainshell3.c*/

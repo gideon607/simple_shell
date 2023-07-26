@@ -68,7 +68,7 @@ void execute_cd(char **args)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		settenv("OLDPWD", getenv("PWD"), 1);
+		setenv("OLDPWD", getenv("PWD"), 1);
 		setenv("PWD", cwd, 1);
 	}
 }
