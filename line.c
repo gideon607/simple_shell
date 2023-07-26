@@ -11,30 +11,32 @@
 * Return: number of characters read, including newline character, but not
 * including terminating null byte. -1 on error or end-of-file.
 */
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
-    static char buffer[BUFFER_SIZE];
-    static size_t start = 0, end = 0;
-    size_t total_len = 0;
-    ssize_t bytes_read;
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
+{
+	static char buffer[BUFFER_SIZE];
+	static size_t start = 0, end = 0;
+	size_t total_len = 0;
+	ssize_t bytes_read;
 
-    if (lineptr == NULL || n == NULL || stream == NULL) {
-        return -1;
-    }
+	if (lineptr == NULL || n == NULL || stream == NULL) 
+		return -1;
+    
+	if (*lineptr == NULL)
+	{
+	*lineptr = malloc(BUFFER_SIZE);
+	if (*lineptr == NULL) 
+		return -1;
 
-    if (*lineptr == NULL) {
-        *lineptr = malloc(BUFFER_SIZE);
-        if (*lineptr == NULL) {
-            return -1;
-        }
-        *n = BUFFER_SIZE;
-    }
+	*n = BUFFER_SIZE;
+	}
 
-    while (1) {
-        if (start >= end) {
-            bytes_read = read(fileno(stream), buffer, BUFFER_SIZE);
-            if (bytes_read <= 0) {
-                break;
-            }
+	while (1) 
+	{
+	if (start >= end) {
+	bytes_read = read(fileno(stream), buffer, BUFFER_SIZE);
+		if (bytes_read <= 0) 
+			break;
+		
             start = 0;
             end = bytes_read;
         }

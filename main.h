@@ -39,7 +39,7 @@ typedef void (*command_func_t)(char **args);
 * the name member stores the name of the command and the func member stores
 * a pointer to a function that implements the command.
 */
-typedef struct 
+typedef struct
 {
 	char *name;
 	command_func_t func;
