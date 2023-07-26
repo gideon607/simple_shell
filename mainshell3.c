@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+* execute_unsetenv - executes the unsetenv command
+* @args: array of arguments
+*
+* Return: void
+*/
 void execute_unsetenv(char **args)
 {
     if (args[1] == NULL)
@@ -8,6 +14,12 @@ void execute_unsetenv(char **args)
         perror("unsetenv");
 }
 
+/**
+* find_executable - finds the full path of an executable command
+* @cmd: command to find
+*
+* Return: full path of the command, or NULL if not found
+*/
 char *find_executable(char *cmd)
 {
     char *path, *path_copy, *dir;
@@ -23,19 +35,35 @@ char *find_executable(char *cmd)
             break;
         dir = strtok(NULL, ":");
     }
+
     free(path_copy);
     return dir == NULL ? NULL : strdup(full_cmd);
 }
 
+/**
+* find_command - finds a command in an array of commands
+* @commands: array of commands
+* @ncommands: number of commands in the array
+* @name: name of the command to find
+*
+* Return: pointer to the command, or NULL if not found
+*/
 command_t *find_command(command_t *commands, int ncommands, char *name)
 {
     int i;
     for (i = 0; i < ncommands; i++)
         if (strcmp(commands[i].name, name) == 0)
-            return &commands[i];
+                return &commands[i];
+
     return NULL;
 }
 
+/**
+* execute_command - executes a command
+* @args: array of arguments, with the first element being the command name
+*
+* Return: void
+*/
 void execute_command(char **args)
 {
     static command_t commands[] = {
@@ -71,12 +99,12 @@ void execute_command(char **args)
 
                 wait(&status);
         }else{
-         perror("fork");
+            perror("fork");
         last_exit_status = 1;
         }
 
         free(cmd);
-     }
+        }
 }
 
 
