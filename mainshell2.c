@@ -1,5 +1,7 @@
 #include "main.h"
 
+
+
 /**
 * replace_variables - replaces variables in a line of text
 * @line: line of text
@@ -73,11 +75,11 @@ void execute_cd(char **args)
 
 /**
 * execute_env - executes the env command
-* @args: array of arguments
+*
 *
 * Return: void
 */
-void execute_env(char **args)
+void execute_env(void)
 {
     int i;
     for (i = 0; environ[i] != NULL; i++)

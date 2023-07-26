@@ -14,7 +14,6 @@
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
     static char buffer[BUFFER_SIZE];
     static size_t start = 0, end = 0;
-    size_t len = 0;
     size_t total_len = 0;
     ssize_t bytes_read;
 
@@ -55,7 +54,8 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
     }
 
     (*lineptr)[total_len] = '\0';
-    return total_len > 0 ? total_len : bytes_read;
+	return total_len > 0 ? (ssize_t)total_len : bytes_read;
+
 }
 
 /**

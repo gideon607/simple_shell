@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,27 +20,47 @@
 
 extern char **environ;
 
+/**
+* command_func_t - function pointer type for command functions
+* @args: array of arguments
+*
+* A variable of type command_func_t is a pointer to a function that takes
+* an array of strings as an argument and returns void. This type is used
+* to represent functions that implement commands.
+*/
 typedef void (*command_func_t)(char **args);
 
-typedef struct {
-    char *name;
-    command_func_t func;
+/**
+* struct command_t - represents a command
+* @name: name of the command
+* @func: pointer to the function that implements the command
+*
+* A variable of type command_t can be used to represent a command, where
+* the name member stores the name of the command and the func member stores
+* a pointer to a function that implements the command.
+*/
+typedef struct 
+{
+	char *name;
+	command_func_t func;
 } command_t;
 
-/* mainshell2.c */
+int last_exit_status;
+
+/*mainshell2.c*/
 void replace_variables(char *line);
 void execute_exit(char **args);
 void execute_cd(char **args);
-void execute_env(char **args);
+void execute_env(void);
 void execute_setenv(char **args);
 
-/* mainshell3.c */
+/*mainshell3.c*/
 void execute_unsetenv(char **args);
 char *find_executable(char *cmd);
 command_t *find_command(command_t *commands, int ncommands, char *name);
 void execute_command(char **args);
 
-/* line.c */
+/*line.c*/
 void parse_line(char *line, char **args);
 int _atoi(char *s);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
