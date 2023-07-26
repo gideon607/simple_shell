@@ -14,7 +14,7 @@ int main(void)
 	while (1)
 	{
 	char *comment;
-
+	printf("$");
 	linelen = _getline(&line, &linecap, stdin);
 	if (linelen <= 0)
 		break;
