@@ -3,6 +3,22 @@
 #define BUFFER_SIZE 1024
 
 /**
+* parse_line - splits a line into tokens separated by spaces
+* @line: line to split
+* @args: array of pointers to strings to store tokens
+*
+* Return: void
+*/
+void parse_line(char *line, char **args)
+{
+	int i = 0;
+	args[0] = strtok(line, " ");
+
+	while (args[i] != NULL)
+		args[++i] = strtok(NULL, " ");
+}
+
+/**
 * _getline - reads an entire line from a file stream
 * @lineptr: pointer to the buffer that stores the line
 * @n: size of the buffer
@@ -56,23 +72,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	return (total_len > 0 ? (ssize_t)total_len : bytes_read);
 
 }
-
-/**
-* parse_line - splits a line into tokens separated by spaces
-* @line: line to split
-* @args: array of pointers to strings to store tokens
-*
-* Return: void
-*/
-void parse_line(char *line, char **args)
-{
-	int i = 0;
-	args[0] = strtok(line, " ");
-
-	while (args[i] != NULL)
-		args[++i] = strtok(NULL, " ");
-}
-
 
 /**
 * _atoi - converts a string to an integer
