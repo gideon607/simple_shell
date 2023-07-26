@@ -15,7 +15,7 @@ int main(void)
 	{
 	char *comment;
 
-	linelen = getline(&line, &linecap, stdin);
+	linelen = _getline(&line, &linecap, stdin);
 	if (linelen <= 0)
 		break;
 
