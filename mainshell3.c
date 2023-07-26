@@ -63,44 +63,49 @@ command_t *find_command(command_t *commands, int ncommands, char *name)
 */
 void execute_command(char **args)
 {
-	static command_t commands[] = {
-		{ "exit", execute_exit },
-		{"cd", execute_cd},
-		{ "env", execute_env },
-		{ "setenv", execute_setenv },
-		{ "unsetenv", execute_unsetenv }
-	};
-	command_t *command;
-	pid_t pid;
-	char *cmd;
-	int status;
-	command = find_command(commands, sizeof(commands) / sizeof(commands[0]), args[0]);
-	if (command != NULL)
-		command->func(args);
-	else
-	{
-		cmd = find_executable(args[0]);
-		if (cmd != NULL)
-		{
-			args[0] = cmd;
-			pid = fork();
-		}
-		if (pid == 0)
-		{
-		if (execve(args[0], args, environ) == -1)
-			perror(args[0]);
-		exit(EXIT_FAILURE);
-		}
-		else if (pid > 0)
-		{
-			last_exit_status = WEXITSTATUS(status);
-			wait(&status);
-		}
-		else
-		{
-			perror("fork");
-			last_exit_status = 1;
-		}
-	free(cmd);
-	}
+    static command_t commands[] = {
+        { "exit", execute_exit },
+        {"cd", execute_cd},
+        { "env", execute_env },
+        { "setenv", execute_setenv },
+        { "unsetenv", execute_unsetenv }
+    };
+    command_t *command;
+    pid_t pid;
+    char *cmd;
+    int status;
+    command = find_command(commands, sizeof(commands) / sizeof(commands[0]), args[0]);
+    if (command != NULL)
+        command->func(args);
+    else
+    {
+        cmd = find_executable(args[0]);
+        if (cmd != NULL)
+        {
+            args[0] = cmd;
+            pid = fork();
+            if (pid == 0)
+            {
+                if (execve(args[0], args, environ) == -1)
+                    perror(args[0]);
+                exit(EXIT_FAILURE);
+            }
+            else if (pid > 0)
+            {
+                last_exit_status = WEXITSTATUS(status);
+                wait(&status);
+            }
+            else
+            {
+                perror("fork");
+                last_exit_status = 1;
+            }
+            free(cmd);
+        }
+        else
+        {
+            fprintf(stderr, "%s: %s: command not found\n", args[0], args[1]);
+            last_exit_status = 127;
+        }
+    }
 }
