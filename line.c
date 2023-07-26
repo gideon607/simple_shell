@@ -50,7 +50,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	(*lineptr)[total_len++] = buffer[start++];
 	if ((*lineptr)[total_len - 1] == '\n')
-		break
+		break;
 
 	(*lineptr)[total_len] = '\0';
 	return (total_len > 0 ? (ssize_t)total_len : bytes_read);
@@ -108,3 +108,4 @@ int _atoi(char *s)
 	}
 	return (oi * pn);
 }
+
