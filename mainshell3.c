@@ -8,10 +8,10 @@
 */
 void execute_unsetenv(char **args)
 {
-        if (args[1] == NULL)
-            fprintf(stderr, "unsetenv: missing argument\n");
-        else if (unsetenv(args[1]) != 0)
-            perror("unsetenv");
+	if (args[1] == NULL)
+		fprintf(stderr, "unsetenv: missing argument\n");
+	else if (unsetenv(args[1]) != 0)
+		perror("unsetenv");
 }
 
 /**
@@ -52,7 +52,7 @@ command_t *find_command(command_t *commands, int ncommands, char *name)
 	int i;
 	for (i = 0; i < ncommands; i++)
 		if (strcmp(commands[i].name, name) == 0)
-			return &commands[i];
+			return (&commands[i]);
 	return (NULL);
 }
 
@@ -93,9 +93,8 @@ void execute_command(char **args)
 	}
 	else if (pid > 0) 
 	{
-	last_exit_status = WEXITSTATUS(status);
-	
-	wait(&status);
+		last_exit_status = WEXITSTATUS(status);
+		wait(&status);
 	} 
 	else {
 		perror("fork");
