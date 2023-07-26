@@ -31,10 +31,9 @@ char *find_executable(char *cmd)
 	{
 		snprintf(full_cmd, sizeof(full_cmd), "%s/%s", dir, cmd);
 		if (access(full_cmd, X_OK) == 0)
-	    		break;
+			break;
 		dir = strtok(NULL, ":");
-	}
-		
+	}	
 	free(path_copy);
 	return (dir == NULL ? NULL : strdup(full_cmd));
 }
@@ -75,7 +74,6 @@ void execute_command(char **args)
 	pid_t pid;
 	char *cmd;
 	int status;
-	
 	command = find_command(commands, sizeof(commands) / sizeof(commands[0]), args[0]);
 	if (command != NULL)
 		command->func(args);
@@ -96,7 +94,8 @@ void execute_command(char **args)
 		last_exit_status = WEXITSTATUS(status);
 		wait(&status);
 	} 
-	else {
+	else 
+	{
 		perror("fork");
 		last_exit_status = 1;
 	} 
