@@ -72,3 +72,4 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	return (total_len > 0 ? (ssize_t)total_len : bytes_read);
 
 }
+}
