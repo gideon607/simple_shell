@@ -32,6 +32,7 @@ char *find_executable(char *cmd)
 		snprintf(full_cmd, sizeof(full_cmd), "%s/%s", dir, cmd);
 		if (access(full_cmd, X_OK) == 0)
 			break;
+		
 		dir = strtok(NULL, ":");
 	}	
 	free(path_copy);
@@ -88,13 +89,11 @@ void execute_command(char **args)
 		if (execve(args[0], args, environ) == -1)
 			perror(args[0]);
 		exit(EXIT_FAILURE);
-	}
-	else if (pid > 0) 
+	}else if (pid > 0) 
 	{
 		last_exit_status = WEXITSTATUS(status);
 		wait(&status);
-	} 
-	else 
+	}else 
 	{
 		perror("fork");
 		last_exit_status = 1;
