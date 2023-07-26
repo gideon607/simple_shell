@@ -2,6 +2,15 @@
 
 #define BUFFER_SIZE 1024
 
+/**
+* _getline - reads an entire line from a file stream
+* @lineptr: pointer to the buffer that stores the line
+* @n: size of the buffer
+* @stream: file stream to read from
+*
+* Return: number of characters read, including newline character, but not
+* including terminating null byte. -1 on error or end-of-file.
+*/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
     static char buffer[BUFFER_SIZE];
     static size_t start = 0, end = 0;
@@ -49,7 +58,13 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
     return total_len > 0 ? total_len : bytes_read;
 }
 
-
+/**
+* parse_line - splits a line into tokens separated by spaces
+* @line: line to split
+* @args: array of pointers to strings to store tokens
+*
+* Return: void
+*/
 void parse_line(char *line, char **args)
 {
     int i = 0;
@@ -62,10 +77,11 @@ void parse_line(char *line, char **args)
 
 
 /**
- * _atoi - converts a string to an integer.
- * @s: input string.
- * Return: integer.
- */
+* _atoi - converts a string to an integer
+* @s: input string
+*
+* Return: integer value represented by the string
+*/
 int _atoi(char *s)
 {
         unsigned int count = 0, size = 0, oi = 0, pn = 1, m = 1, i;
