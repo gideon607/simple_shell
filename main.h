@@ -13,7 +13,7 @@ void print_environ(void);
 int str_comp(char *s1, char *s2);
 char **parse_strings(char *buffer);
 char *search_path(char *cmd);
-char *_strncat(char *dest, char *src, int n);
+char *concat_str(char *dest, char *src, int n);
 int find_len(char *pointer);
 char *str_concat(char *dest, char *src);
 char *locate_char(char *s, char c);
