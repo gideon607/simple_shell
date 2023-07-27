@@ -1,40 +1,54 @@
 #include "main.h"
 
 /**
-* main - entry on the program
-*
-* Return: is always 0.
-*/
-int main(void)
+  * main - entry point of the program
+  * @ac: argument counter
+  * @av: argument vector
+  * @envp: array of strings.
+  * Return: 0
+  */
+int main(int ac __attribute__((unused)), char *av[], char *envp[])
 {
-	char *line = NULL;
-	size_t linecap = 0;
-	ssize_t linelen;
-	char *args[MAXLINE / 2 + 1];
+	char *buffer = NULL;
+	size_t bufsize = 0;
+	int status;
+	pid_t child_pid;
+
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
-	char *comment;
-	printf("$");
-	linelen = getline(&line, &linecap, stdin);
-	if (linelen <= 0)
-		break;
-
-	comment = strchr(line, '#');
-	if (comment != NULL)
-		*comment = '\0';
-
-	line[linelen - 1] = '\0';
-
-	replace_variables(line);
-
-	parse_line(line, args);
-
-		if (args[0] == NULL)
+		if (isatty(STDIN_FILENO))
+			printf("~$ ");
+		if (getline(&buffer, &bufsize, stdin) == -1)
+			break;
+		if (buffer == NULL)
+			exit(0);
+		av = parse_strings(buffer);
+		if (!av[0])
+		{
+			free(av);
 			continue;
-
-		execute_command(args);
+		}
+		if (str_comp(av[0], "env") == 0)
+		{
+			print_environ(), free(av);
+			continue;
+		}
+		if (str_comp(av[0], "exit") == 0)
+			free(av), free(buffer), exit(0);
+		child_pid = fork();
+		if (child_pid == 0)
+		{
+			if (locate_char(av[0], '/') == NULL)
+				av[0] = search_path(av[0]);
+			if (execve(av[0], av, envp))
+			{
+				perror("execve"), exit(EXIT_FAILURE);
+				break;
+			}
+		}
+		wait(&status), free(av);
 	}
-
-	free(line);
+	free(buffer);
 	return (0);
 }
